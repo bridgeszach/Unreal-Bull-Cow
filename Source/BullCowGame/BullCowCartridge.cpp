@@ -6,17 +6,8 @@ void UBullCowCartridge::BeginPlay() // When the game starts
 {
     Super::BeginPlay();
     
-    SetupGame();
-
-    PrintLine(TEXT("The number of valid words is %i"), GetValidWords(Words).Num());
-    //PrintLine(TEXT("The Hidden Word is: %s \n It is %i characters long."), *HiddenWord, HiddenWord.Len());  // Debug Line
-
-
-   
-    
-             
+    SetupGame();     
 }
-
 
 void UBullCowCartridge::OnInput(const FString& PlayerInput) // When the player hits enter
 {    
@@ -30,12 +21,11 @@ void UBullCowCartridge::OnInput(const FString& PlayerInput) // When the player h
     }            
 }
 
-
 void UBullCowCartridge::SetupGame(){
     // Welcome Player
     PrintLine(TEXT("Welcome to Bull Cows!"));
 
-    HiddenWord = TEXT("cake");    
+    HiddenWord = GetValidWords(Words)[FMath::RandRange(0, GetValidWords(Words).Num() - 1)];    
     Attempts = HiddenWord.Len();
     bGameOver = false;
 
@@ -43,7 +33,6 @@ void UBullCowCartridge::SetupGame(){
     PrintLine(TEXT("You have %i attempts"), Attempts);
     PrintLine(TEXT("Type in your guess and \npress enter to continue."));  // Prompt player for guess      
 }
-
 
 void UBullCowCartridge::EndGame()
 {
@@ -96,7 +85,6 @@ bool UBullCowCartridge::IsIsogram(const FString& Word) const
 
     return true;   
 }
-
 
 TArray<FString> UBullCowCartridge::GetValidWords(const TArray<FString>& WordList) const
 {
